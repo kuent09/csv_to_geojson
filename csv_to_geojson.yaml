@@ -1,0 +1,51 @@
+---
+spec-version: v1.0
+name: proserv/csv_to_geojson
+version: 1.0.0
+display-name: CSV to GeoJSON
+description: Create geojson vector from csv
+docker-image: registry-external.admin-tool.delair-stack.com/kuent/csv_to_geojson
+instance-type: small
+volume-size: 20
+groups: [Free analytics]
+inputs:
+  - name: csv
+    display-name: CSV file
+    description: CSV file to create vector file
+    kind: dataset
+    schema:
+      type: file
+    required: true
+parameters:
+  - name: output_file_name
+    display-name: New file name
+    description: Name of selected microplots
+    schema:
+      type: string
+    required: true
+  - name: latitude
+    display-name: Latitude attribute
+    description: Attribute with latitude coordinates
+    schema:
+      type: string
+    required: true
+  - name: longitude
+    display-name: Longitude attribute
+    description: Attribute with longitude coordinates
+    schema:
+      type: string
+    required: true
+  - name: epsg
+    display-name: EPSG code
+    description: CRS EPSG code of coordinates
+    schema:
+      type: number
+    required: true
+deliverables:
+  - name: output_vector
+    display-name: Vector
+    description: Vector created from CSV
+    kind: dataset
+    schema:
+      type: vector
+    required: true
