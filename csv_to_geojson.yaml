@@ -19,7 +19,7 @@ inputs:
 parameters:
   - name: output_file_name
     display-name: New file name
-    description: Name of selected microplots
+    description: Name of vector file
     schema:
       type: string
     required: true

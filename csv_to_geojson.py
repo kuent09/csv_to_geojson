@@ -18,8 +18,25 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=LOG_FORMAT)
 
 def csv_2_geojson(csv_file, latitude, longitude, epsg, output_file_name):
     """
-    Convert a DataFrame with longitude and latitude columns
-    to a GeoDataFrame.
+    Convert a CSV to a GeoJSON.
+
+    Parameters
+    ----------
+    csv_file : str
+        CSV file to create vector file.
+    latitude : str
+        Attribute with latitude coordinates.
+    longitude : str
+        Attribute with longitude coordinates.
+    epsg : integer
+        CRS EPSG code of coordinates.
+    output_file_name : str
+        Name of vector file.
+
+    Returns
+    -------
+    A vector GeoJSON.
+
     """
     csv_data = pd.read_csv(csv_file,
                            header=0)
