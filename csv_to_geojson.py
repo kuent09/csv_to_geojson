@@ -16,7 +16,7 @@ LOG_FORMAT = '[%(levelname)s] %(message)s'
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=LOG_FORMAT)
 
 
-def csv_2_geojson(csv_file, latitude, longitude, epsg, output_file_name):
+def csv_2_geojson(csv_file, latitude, longitude, altitude, epsg, output_file_name):
     """
     Convert a CSV to a GeoJSON.
 
@@ -28,6 +28,8 @@ def csv_2_geojson(csv_file, latitude, longitude, epsg, output_file_name):
         Attribute with latitude coordinates.
     longitude : str
         Attribute with longitude coordinates.
+    altitude : str
+        Attribute with altitude coordinates.
     epsg : integer
         CRS EPSG code of coordinates.
     output_file_name : str
@@ -41,7 +43,7 @@ def csv_2_geojson(csv_file, latitude, longitude, epsg, output_file_name):
     csv_data = pd.read_csv(csv_file,
                            header=0)
     df = csv_data.copy()
-    geometry = [Point(xy) for xy in zip(df[longitude], df[latitude])]
+    geometry = [Point(xyz) for xyz in zip(df[longitude], df[latitude], df[altitude])]
     gdf = gpd.GeoDataFrame(df, crs=epsg, geometry=geometry)
     gdf.to_file(output_file_name, driver='GeoJSON')
 
@@ -82,6 +84,10 @@ def main():
     longitude = parameters.get('longitude')
     logging.info('Longitude: {name!r} '.format(
         name=longitude))
+
+    altitude = parameters.get('altitude')
+    logging.info('Altitude: {name!r} '.format(
+        name=altitude))
     
     epsg = parameters.get('epsg')
     logging.info('EPSG: {name!r} '.format(
@@ -99,6 +105,7 @@ def main():
         csv_file=csv_path,
         latitude=latitude,
         longitude=longitude,
+        altitude=altitude,
         epsg=epsg,
         output_file_name=outpath)
 
@@ -116,7 +123,7 @@ def main():
                         "path": str(outpath)
                     }
                 ]
-            }
+            },
         },
         "version": "0.1"
     }

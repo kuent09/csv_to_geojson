@@ -35,6 +35,12 @@ parameters:
     schema:
       type: string
     required: true
+  - name: altitude
+    display-name: Altitude attribute
+    description: Attribute with altitude coordinates
+    schema:
+      type: string
+    required: true
   - name: epsg
     display-name: EPSG code
     description: CRS EPSG code of coordinates
